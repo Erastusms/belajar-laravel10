@@ -1,0 +1,298 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Address API",
+        "description": "Address API",
+        "version": "1.0"
+    },
+    "servers": [{ "url": "http://localhost:8000" }],
+    "paths": {
+        "/api/contacts/{idContact}/addresses": {
+            "post": {
+                "description": "Create new address",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "$ref": "#/components/parameters/IdContact"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Create new address",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateOrUpdateAddress"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success create address",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddressCRUResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Get list addresses",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/IdContact"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List addresses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "street": {
+                                                        "type": "string"
+                                                    },
+                                                    "city": {
+                                                        "type": "string"
+                                                    },
+                                                    "province": {
+                                                        "type": "string"
+                                                    },
+                                                    "country": {
+                                                        "type": "string"
+                                                    },
+                                                    "postal_code": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/contacts/{idContact}/addresses/{idAddress}": {
+            "get": {
+                "description": "Get address",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "$ref": "#/components/parameters/IdContact"
+                    },
+                    {
+                        "$ref": "#/components/parameters/IdAddress"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get detail address",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddressCRUResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update address",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "$ref": "#/components/parameters/IdContact"
+                    },
+                    {
+                        "$ref": "#/components/parameters/IdAddress"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update address",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateOrUpdateAddress"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update address",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddressCRUResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete address",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "$ref": "#/components/parameters/IdContact"
+                    },
+                    {
+                        "$ref": "#/components/parameters/IdAddress"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success delete",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "boolean"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "IdContact": {
+                "name": "idContact",
+                "in": "path",
+                "required": true,
+                "description": "ID Contact",
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "examples": {
+                    "Family": {
+                        "description": "Sample contact id for Family",
+                        "value": "1"
+                    },
+                    "Friend": {
+                        "description": "Sample contact id for Friend",
+                        "value": "2"
+                    }
+                }
+            },
+            "IdAddress": {
+                "name": "idAddress",
+                "in": "path",
+                "required": true,
+                "description": "ID Address",
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "examples": {
+                    "Bekasi": {
+                        "description": "Sample address id for Bekasi",
+                        "value": "1"
+                    },
+                    "Jakarta": {
+                        "description": "Sample address id for Jakarta",
+                        "value": "2"
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "CreateOrUpdateAddress": {
+                "type": "object",
+                "properties": {
+                    "street": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "province": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AddressCRUResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number"
+                            },
+                            "street": {
+                                "type": "string"
+                            },
+                            "city": {
+                                "type": "string"
+                            },
+                            "province": {
+                                "type": "string"
+                            },
+                            "country": {
+                                "type": "string"
+                            },
+                            "postal_code": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "errors": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    }
+}
