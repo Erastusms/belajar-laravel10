@@ -32,15 +32,8 @@ class ContactController extends Controller
     {
         $user = Auth::user();
         $contact = Contact::where('id', $id)->where('user_id', $user->id)->first();
-        if (!$contact) {
-            throw new HttpResponseException(response()->json([
-                'errors' => [
-                    'message' => [
-                        "not found"
-                    ]
-                ]
-            ])->setStatusCode(404));
-        }
+        
+        $this->checkIsDataExist($contact);
 
         return new ContactResource($contact);
     }
@@ -49,15 +42,8 @@ class ContactController extends Controller
     {
         $user = Auth::user();
         $contact = Contact::where('id', $id)->where('user_id', $user->id)->first();
-        if (!$contact) {
-            throw new HttpResponseException(response()->json([
-                'errors' => [
-                    'message' => [
-                        "not found"
-                    ]
-                ]
-            ])->setStatusCode(404));
-        }
+
+        $this->checkIsDataExist($contact);
 
         $data = $request->validated();
         $contact->fill($data);
@@ -70,15 +56,8 @@ class ContactController extends Controller
     {
         $user = Auth::user();
         $contact = Contact::where('id', $id)->where('user_id', $user->id)->first();
-        if (!$contact) {
-            throw new HttpResponseException(response()->json([
-                'errors' => [
-                    'message' => [
-                        "not found"
-                    ]
-                ]
-            ])->setStatusCode(404));
-        }
+        
+        $this->checkIsDataExist($contact);
 
         $contact->delete();
         return response()->json([
@@ -116,5 +95,18 @@ class ContactController extends Controller
         $contacts = $contacts->paginate(perPage: $size, page: $page);
 
         return new ContactCollection($contacts);
+    }
+
+    public function checkIsDataExist($data)
+    {
+        if (!$data) {
+            throw new HttpResponseException(response()->json([
+                'errors' => [
+                    'message' => [
+                        "not found"
+                    ]
+                ]
+            ])->setStatusCode(404));
+        }
     }
 }
