@@ -46,6 +46,10 @@
                 "description": "Get list addresses",
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
                         "$ref": "#/components/parameters/IdContact"
                     }
                 ],
