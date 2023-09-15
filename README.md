@@ -64,3 +64,13 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Note For Me
+
+| Command | Description |
+| --- | --- |
+| `php artisan make:request UserRegisterRequest` | Create new class request |
+| `php artisan make:resource UserResource` | Create new class resource |
+| `php artisan make:controller UserController` | Create new class controller |
+| `php artisan make:test UserTest` | Create new class test |
+| `php artisan serve` | Run laravel |
